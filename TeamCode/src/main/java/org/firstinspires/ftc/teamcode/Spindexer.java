@@ -48,12 +48,12 @@ public class Spindexer {
             acceptingBalls = true;
         }
         if(acceptingBalls){
-            if ((colorSensorV3.red() > 400 || colorSensorV3.blue() > 400 || colorSensorV3.green() > 400) && !spindexer.isBusy() && ballCount < 3) {
+            if ((colorSensorV3.red() > 250 || colorSensorV3.blue() > 250 || colorSensorV3.green() > 250) && !spindexer.isBusy() && ballCount < 3) {
                 rotateThird();
                 ballCount++;
             }
         }else if(!acceptingBalls){
-            if ((distanceSensor.getDistance(DistanceUnit.MM)> 140 && distanceSensor.getDistance(DistanceUnit.MM) < 190) && ballCount >= 1 && ballTimer.milliseconds() > 300) {
+            if ((distanceSensor.getDistance(DistanceUnit.MM)> 200 && distanceSensor.getDistance(DistanceUnit.MM) < 250) && ballCount >= 1 && ballTimer.milliseconds() > 300) {
                 ballCount--;
                 ballTimer.reset();
             }
@@ -95,7 +95,7 @@ public class Spindexer {
     }
     public void rotateThird(){
         spindexer.setPower(1);
-        toAngle((toDegree(spindexer.getCurrentPosition())%360) - 120);
+        toAngle((toDegree(spindexer.getCurrentPosition())%360) - 119);
     }
 
     public boolean returnShootingMode(){
