@@ -1,0 +1,115 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.acmerobotics.roadrunner.ftc.OverflowEncoder;
+import com.acmerobotics.roadrunner.ftc.RawEncoder;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+
+import java.util.List;
+
+public class Turret
+{
+    public Limelight3A limelight;
+    public CRServo axon;
+    public OverflowEncoder turretEncoder;
+    double kP = 0.03, kI=0.00025;
+    double integral = 0;
+    double prevTargetAngle = 0;
+
+    public Turret(HardwareMap hardwareMap){
+        limelight = hardwareMap.get(Limelight3A .class, "Limelight");
+
+        // pipeline 0 is a placeholder, put apriltag pipeline when configured
+        limelight.pipelineSwitch(0);
+
+        limelight.start();
+        axon = hardwareMap.get(CRServo.class, "axon");
+        turretEncoder = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "transfer")));
+    }
+
+    private double toTicks(double angle)
+    {
+        return angle * 29.7770061728;
+    }
+    private double toDegrees(double ticks)
+    {
+        return ticks/29.7770061728;
+    }
+    public void TurnTo(double angle){
+        if(Math.abs(angle - prevTargetAngle) > 20)
+        {
+            integral = 0;
+        }
+
+        double currAngle = toDegrees(turretEncoder.encoder.getPositionAndVelocity().position);
+        double error = angle-currAngle;
+        integral += error;
+
+        double output = kP*error + kI * integral;
+
+
+
+
+
+        /*
+        if(Math.abs(angle-currAngle) > 30){
+            axon.setPower((angle - currAngle)/Math.abs(angle - currAngle));
+        }else if(Math.abs(angle-currAngle) > 10){
+            axon.setPower(0.3*((angle - currAngle)/Math.abs(angle - currAngle)));
+        }else{
+            axon.setPower(0);
+        };*/
+
+        axon.setPower(output);
+
+        prevTargetAngle = angle;
+    }
+    public void TurnToAT(double tag){
+        double currAngle = toDegrees(turretEncoder.encoder.getPositionAndVelocity().position);
+        LLResult result = limelight.getLatestResult();
+
+
+        if (result != null) {
+
+            if (result.isValid()) {
+                List<LLResultTypes.FiducialResult> results = result.getFiducialResults();
+                //get limelight values:
+                double xAngle = 0;
+                for(int i = 0; i < results.size(); i++){
+                    if(results.get(i).getFiducialId() == tag){
+                        xAngle = results.get(i).getTargetXDegrees();
+                    }
+                }
+
+                double targetAngle = currAngle - xAngle;
+
+                TurnTo(targetAngle);
+            }
+            else
+            {
+                TurnTo(currAngle);
+            }
+        }
+        else
+        {
+            TurnTo(currAngle);
+        }
+
+    }
+
+    public void TurnToAT()
+    {
+        TurnToAT(20);
+    }
+    public  double getCurrAngle(){
+        return toDegrees(turretEncoder.encoder.getPositionAndVelocity().position);
+    }
+
+}
