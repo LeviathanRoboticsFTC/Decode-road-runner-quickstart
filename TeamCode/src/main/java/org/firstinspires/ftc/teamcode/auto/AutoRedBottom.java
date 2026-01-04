@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.ProgrammingBoardV1;
+import org.firstinspires.ftc.teamcode.ProgrammingBoards.ProgrammingBoardV1;
 
 @Autonomous
 public class AutoRedBottom extends LinearOpMode {

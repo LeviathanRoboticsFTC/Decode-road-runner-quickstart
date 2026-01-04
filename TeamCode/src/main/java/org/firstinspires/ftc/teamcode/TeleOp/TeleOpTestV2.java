@@ -4,10 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.Flywheel;
-import org.firstinspires.ftc.teamcode.Intake;
-import org.firstinspires.ftc.teamcode.ProgrammingBoardV1;
-import org.firstinspires.ftc.teamcode.Spindexer;
+import org.firstinspires.ftc.teamcode.ProgrammingBoards.Flywheel;
+import org.firstinspires.ftc.teamcode.ProgrammingBoards.Intake;
+import org.firstinspires.ftc.teamcode.ProgrammingBoards.Spindexer;
 import org.firstinspires.ftc.teamcode.Transfer;
 
 @TeleOp

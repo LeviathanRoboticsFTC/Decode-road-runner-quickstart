@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.ProgrammingBoardV1;
+import org.firstinspires.ftc.teamcode.ProgrammingBoards.ProgrammingBoardV1;
 
 @Autonomous
 public class AutoRedTopV2 extends LinearOpMode {
