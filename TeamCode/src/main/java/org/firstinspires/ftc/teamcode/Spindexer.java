@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
-import com.qualcomm.hardware.rev.RevTouchSensor;
+//    import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -14,7 +15,8 @@ public class Spindexer {
     public DcMotorEx spindexer;
     RevColorSensorV3 colorSensorV3;
 
-    public RevTouchSensor touchSensor;
+//    public RevTouchSensor touchSensor;
+    public DigitalChannel touchSensor;
     public DistanceSensor distanceSensor;
 
     Boolean acceptingBalls = true;
@@ -24,7 +26,11 @@ public class Spindexer {
         spindexer = hardwareMap.get(DcMotorEx.class, "spindexer");
         spindexer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         colorSensorV3 = hardwareMap.get(RevColorSensorV3.class, "colorSensor");
-        touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
+
+//     touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
+    touchSensor = hardwareMap.get(DigitalChannel.class, "touchSensor");
+    touchSensor.setMode(DigitalChannel.Mode.INPUT);
+        
         distanceSensor = hardwareMap.get(DistanceSensor.class, "distanceSensor");
         spindexer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
