@@ -35,7 +35,8 @@ public class TeleOpTestV2 extends LinearOpMode {
             telemetry.addData("red", spindexer.getRedResult());
             telemetry.addData("green", spindexer.getGreenResult());
             telemetry.addData("blue", spindexer.getBlueResult());
-            telemetry.addData("touch", spindexer.touchSensor.isPressed());
+//            telemetry.addData("touch", spindexer.touchSensor.isPressed());
+            telemetry.addData("touch", !spindexer.touchSensor.getState());
             telemetry.addData("distance", spindexer.distanceSensor.getDistance(DistanceUnit.MM));
             telemetry.addData("Accepting Balls? : ", spindexer.returnShootingMode());
             telemetry.addData("balls", spindexer.ballCount);
